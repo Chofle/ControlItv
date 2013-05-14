@@ -18,15 +18,23 @@ import java.util.ArrayList;
 public class GestionItv {
     
     Statement stmt;
+    static String filtro = "";
     
-    public ArrayList<Inspección>list() {
+    protected  ArrayList<Inspección>list() {
         Inspección inspección = null;
         ArrayList<Inspección> listItv = new ArrayList();
         String sql = "SELECT * FROM inspección";
         try {
             Statement stmt = Conexion.conexion.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-
+            
+            /*if(!filtro.isEmpty()) {
+                sql += "WHERE matricula LIKE '%"+filtro+"%' OR "
+                        + "fecha LIKE '%"+filtro+"%' OR "
+                        + "hora LIKE '%"+filtro+"%' OR "
+                        + "observaciones LIKE '%"+filtro+"%' ";
+            }*/
+            
             while (rs.next()) {
                 int id_Inspeccion = rs.getInt("Id_Inspeccion");
                 String Matricula = rs.getString("Matricula");
@@ -79,11 +87,11 @@ public class GestionItv {
   
     }
     
-    /* public boolean update(Inspección inspección) {
+     public boolean update(Inspección inspección) {
         try {
 
             stmt = Conexion.conexion.createStatement();
-            String sql = "Update inspeccion set Id_Inspeccion =" + inspección.getId_Inspeccion() + ", Matricula =" + inspección.getMatricula() + "where id_alumno =" + alumno.getId_alumno();
+            String sql = "Update inspeccion set Id_Inspeccion =" + inspección.getId_Inspeccion() + ", Matricula =" + inspección.getMatricula() + ", Fecha =" + inspección.getFecha() + ", Hora" + inspección.getHora() + ", Observaciones =" + inspección.getObservaciones() + ", Id_inspector =" + inspección.getId_inspector();
             stmt.executeUpdate(sql);
 
         } catch (SQLException ex) {
@@ -92,6 +100,22 @@ public class GestionItv {
             return false;
         }
         return true;
-    }*/
+    }
+     
+     public boolean delete(Inspección inspección) {
+
+        try {
+
+            stmt = Conexion.conexion.createStatement();
+            String sql = "Delete from inspeccion =" + inspección.getId_Inspeccion();
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException ex) {
+            System.out.println("Error al consultar la base de datos");
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+     }
     
 }

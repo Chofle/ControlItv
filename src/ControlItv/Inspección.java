@@ -63,7 +63,7 @@ public class Inspección {
         this.hora = hora;
     }
     
-    public String observaciones(){
+    public String getObservaciones(){
         return observaciones;
     }
     
